@@ -19,18 +19,21 @@ if (file_exists($outfile))
 
 $done_emails = array();
 foreach($contacts as $contact) {
-    //var_dump($contact);
-    if (!$contact->email[0]->email, $done_emails) {
+//    if ($contact->nickname != 'tim.whelan')
+//        continue;
+    if (array_search($contact->email[0]->email, $done_emails) === FALSE) {
         if (count($contact->email) > 1) {
+            //var_dump($contact->email);
             foreach ($contact->email as $e) {
+                
                 $em = preg_replace('/.*@/', '', $e->email);
-            
-                file_put_contents($outfile, 'alias '.$contact->nick.'.'.$em.' '.$contact->name.' <'.$contact->email[0]->email.">\n", FILE_APPEND);
+                file_put_contents($outfile, 'alias '.$contact->nickname.'.'.$em.' '.$contact->name.' <'.$e->email.">\n", FILE_APPEND);
             }
         } else {
-            file_put_contents($outfile, 'alias '.$contact->nick.' '.$contact->name.' <'.$contact->email[0]->email.">\n", FILE_APPEND);
+            file_put_contents($outfile, 'alias '.$contact->nickname.' '.$contact->name.' <'.$contact->email[0]->email.">\n", FILE_APPEND);
         }
-        array_push($done_emails, $contact->email[0]->email);
+        $done_emails[] = $contact->email[0]->email;
+
     }
 }
 

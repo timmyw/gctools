@@ -4,7 +4,7 @@ if [ $# -eq 1 ]; then
     fname=$1
 fi
 
-flds=name,email,address,birthday,event,notes,organization,phone,relation,title,website
+flds=name,email,address,birthday,event,notes,organization,phone,relation,title,website,nickname
 
 echo $flds > $fname
 google -u timmy.whelan@gmail.com -n '.*' --fields="$flds" contacts list >> $fname

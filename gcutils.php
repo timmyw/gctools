@@ -20,8 +20,8 @@ function load_contacts($fname)
             $contact->{$flds[$i]} = $data[$i];
         }
 
-        if ($contact->nick == '' || $contact->nick == 'None')
-            $contact->nick = strtolower(preg_replace('/[ -=]/', '.', $contact->name, -1));
+        if ($contact->nickname == '' || $contact->nickname == 'None')
+            $contact->nickname = strtolower(preg_replace('/[ -=]/', '.', $contact->name, -1));
         $ns = preg_split('/;/', $contact->email);
         $emails = array();
         foreach ($ns as $n) {
