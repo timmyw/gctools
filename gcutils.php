@@ -20,26 +20,28 @@ function load_contacts($fname)
             $contact->{$flds[$i]} = $data[$i];
         }
 
-        $contact->nick = strtolower(preg_replace('/[ -=]/', '.', $contact->name, -1));
+        if ($contact->nick == '' || $contact->nick == 'None')
+            $contact->nick = strtolower(preg_replace('/[ -=]/', '.', $contact->name, -1));
         $ns = preg_split('/;/', $contact->email);
         $emails = array();
         foreach ($ns as $n) {
+            $n = trim($n);
             $mc = new stdClass;
             $mc->cat='work';
             $mc->email = $n;
             if (strstr($n, ' ')) {
                 list($mc->cat, $mc->email) = preg_split('/ /', $n);
             }
-            array_push($emails, $mc);
+            $emails[] = $mc;
         }
         $ns = preg_split('/;/', $contact->phone);
         $phones = array();
         foreach ($ns as $n) {
-            array_push($phones, trim($n));
+            $phones[] = trim($n);
         }
         $contact->email = $emails;
         $contact->phone = $phones;
-        array_push($contacts, $contact);
+        $contacts[] = $contact;
     }
     fclose($fd);
     return $contacts;
